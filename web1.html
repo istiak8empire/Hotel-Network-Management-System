@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel-Network-Management-System</title>
+</head>
+<body>
+    <h1>Welcome to The Hotel</h1>
+    <p>The hotel has six floors, each housing a different department:</p>
+    <ul>
+        <li>Floor No: 6 - IT Department</li>
+        <p>Network ID: 201.157.30.0 /24</p>
+        <li>Floor No: 5 - Management Department</li>
+        <p>Network ID: 201.157.31.0 /24</p>
+        <li>Floor No: 4 - Human Resources Department</li>
+        <p>Network ID: 201.157.32.0 /24</p>
+        <li>Floor No: 3 - Food & Beverages Department</li>
+        <p>Network ID: 201.157.33.0 /24</p>
+        <li>Floor No: 2 - Store & Logistics Department</li>
+        <p>Network ID: 201.157.34.0 /24</p>
+        <li>Floor No: 1 - Reception Department</li>
+        <p>Network ID: 201.157.35.0 /24</p>
+    </ul>
+
+    <h2>Router Connections</h2>
+    <ul>
+        <li>Connection 5: Management Router to IT/Main Router</li>
+        <p>Network ID: 199.151.5.0</p>
+        <li>Connection 4: Human Resources Router to IT/Main Router</li>
+        <p>Network ID: 199.151.4.0</p>
+        <li>Connection 3: Food & Beverages Router to IT/Main Router</li>
+        <p>Network ID: 199.151.3.0</p>
+        <li>Connection 2: Store & Logistics Router to IT/Main Router</li>
+        <p>Network ID: 199.151.2.0</p>
+        <li>Connection 1: Reception Router to IT/Main Router</li>
+        <p>Network ID: 199.151.1.0</p>
+    </ul>
+
+    <h2>Additional Networks</h2>
+    <p>Network between Management Router and Store & Logistics Router: 192.168.11.0</p>
+    <p>Network between Reception Router and Store & Logistics Router: 192.168.12.0</p>
+    <p>Network between Management Router and Reception Router: 192.168.13.0</p>
+
+    <h2>EIGRP Routing Configuration</h2>
+    <p>EIGRP routing protocol for IT/Main Router:</p>
+    <pre>
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface Serial2/0
+Router(config-if)#exit
+Router(config)# router eigrp 1
+Router(config-router)# network 201.157.30.0 255.255.255.0
+Router(config-router)# network 199.151.1.0 255.255.255.0
+Router(config-router)# network 199.151.2.0 255.255.255.0
+Router(config-router)# network 199.151.3.0 255.255.255.0
+Router(config-router)# network 199.151.4.0 255.255.255.0
+Router(config-router)# network 199.151.5.0 255.255.255.0
+    </pre>
+	
+<h2>EIGRP routing protocol for: Management Router</h2>
+    <pre>
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface Serial0/0/0
+Router(config-if)#exit
+Router(config)#router eigrp 1
+Router(config-router)# network 201.157.31.0 255.255.255.0
+Router(config-router)# network 199.151.5.0 255.255.255.0
+Router(config-router)# network 192.168.11.0 255.255.255.0
+Router(config-router)# network 192.168.13.0 255.255.255.0
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0
+Router(config-if)# ip helper-address 201.157.30.2
+    </pre>
+
+<h2>EIGRP Configuration for Human Resources Router</h2>
+    <pre>
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface Serial0/0/0
+Router(config-if)#exit
+Router(config)#router eigrp 1
+Router(config-router)# network 201.157.32.0 255.255.255.0
+Router(config-router)# network 199.151.4.0 255.255.255.0
+
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0
+Router(config-if)# ip helper-address 201.157.30.2
+    </pre>
+
+    <h2>EIGRP Configuration for Food & Beverages Router</h2>
+    <pre>
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface Serial0/0/0
+Router(config-if)#exit
+Router(config)#router eigrp 1
+Router(config-router)# network 201.157.33.0 255.255.255.0
+Router(config-router)# network 199.151.3.0 255.255.255.0
+
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0
+Router(config-if)# ip helper-address 201.157.30.2
+    </pre>
+
+    <h2>EIGRP Configuration for Store & Logistics Router</h2>
+    <pre>
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface Serial0/0/0
+Router(config-if)#exit
+Router(config)#router eigrp 1
+Router(config-router)# network 201.157.34.0 255.255.255.0
+Router(config-router)# network 199.151.2.0 255.255.255.0
+Router(config-router)# network 192.168.11.0 255.255.255.0
+Router(config-router)# network 192.168.12.0 255.255.255.0
+
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0
+Router(config-if)# ip helper-address 201.157.30.2
+    </pre>
+
+    <h2>EIGRP Configuration for Reception Router</h2>
+    <pre>
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+Router(config)#interface Serial0/0/0
+Router(config-if)#exit
+Router(config)#router eigrp 1
+Router(config-router)# network 201.157.35.0 255.255.255.0
+Router(config-router)# network 199.151.1.0 255.255.255.0
+Router(config-router)# network 192.168.12.0 255.255.255.0
+Router(config-router)# network 192.168.13.0 255.255.255.0
+
+Router(config-if)#exit
+Router(config)#interface GigabitEthernet0/0
+Router(config-if)# ip helper-address 201.157.30.2
+    </pre>
+	
+</body>
+</html>
