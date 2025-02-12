@@ -1,1 +1,3 @@
 # Hotel-Network-Management-System
+
+The Hotel Network Management System is designed to provide seamless communication, efficient data transmission, and secure network operations across floors, each housing a different department of a hotel building. A star-like topology was designed, where each department’s router connected directly to the central IT router, with serial links enabling inter-router communication. Several essential servers were deployed, including DHCP for automatic IP assignment, DNS for domain name resolution, Web for online services, FTP for file transfers, and Email for communication. The project demonstrated expertise in subnetting, routing, and network services, ensuring seamless connectivity and operations.
